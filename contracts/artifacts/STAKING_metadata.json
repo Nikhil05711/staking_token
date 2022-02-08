@@ -9,7 +9,7 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "_RijentToken",
+						"name": "_stakingToken",
 						"type": "address"
 					}
 				],
@@ -65,31 +65,24 @@
 				"inputs": [
 					{
 						"indexed": false,
-						"internalType": "address",
-						"name": "token",
-						"type": "address"
+						"internalType": "uint256",
+						"name": "claimtime",
+						"type": "uint256"
 					},
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "amount",
+						"name": "generatedTime",
 						"type": "uint256"
-					}
-				],
-				"name": "Recovered",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
+					},
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "reward",
+						"name": "rewardtime",
 						"type": "uint256"
 					}
 				],
-				"name": "RewardAdded",
+				"name": "RewardGen",
 				"type": "event"
 			},
 			{
@@ -122,10 +115,66 @@
 				"inputs": [
 					{
 						"indexed": false,
+						"internalType": "uint256",
+						"name": "stakePerWEEK",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "timeAfterStakeFinish",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "weekOfClaim",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amountStakeClaimable",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "stakedAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "Withdrawl",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
 						"internalType": "address",
-						"name": "receiver",
+						"name": "from",
 						"type": "address"
 					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "_Transfer",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
 					{
 						"indexed": false,
 						"internalType": "uint256",
@@ -135,23 +184,17 @@
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "_totalReward",
+						"name": "totalRewardedAmount",
 						"type": "uint256"
 					},
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "_claimableReward",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "amountforWeeks",
+						"name": "totalreward",
 						"type": "uint256"
 					}
 				],
-				"name": "claimedReward",
+				"name": "mintabledAmount",
 				"type": "event"
 			},
 			{
@@ -160,82 +203,13 @@
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "newRewardDuration",
-						"type": "uint256"
-					}
-				],
-				"name": "rewardDurationUpdated",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "receiver",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "_totalReward",
+						"name": "stakedAmount",
 						"type": "uint256"
 					},
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "_claimableReward",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "rewardGenerateTime",
-						"type": "uint256"
-					}
-				],
-				"name": "rewardGenerated",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "receiver",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "rewardPaid",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "sender",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "receiver",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "lastUpdatedTime",
+						"name": "StakeTime",
 						"type": "uint256"
 					},
 					{
@@ -247,7 +221,19 @@
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "coolingPeriod",
+						"name": "_stakeMonth",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "totalRewardGeneratead",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "interestPerSecond",
 						"type": "uint256"
 					}
 				],
@@ -255,39 +241,8 @@
 				"type": "event"
 			},
 			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "userAddress",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "stakeAmount",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "capitalPerWeek",
-						"type": "uint256"
-					}
-				],
-				"name": "unfreezedCapitalAmount",
-				"type": "event"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"name": "ClaimedTime",
+				"inputs": [],
+				"name": "ClaimMature",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -300,20 +255,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "StakingToken",
-				"outputs": [
-					{
-						"internalType": "contract IBEP20",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "_rewardPerSecond",
+				"name": "ClaimableReward",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -326,7 +268,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "_totalReward",
+				"name": "StakeTime",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -351,6 +293,19 @@
 					}
 				],
 				"name": "allowance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "amountStakeClaimable",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -418,27 +373,22 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "claim",
+				"inputs": [],
+				"name": "claimPrinciple",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"name": "claimableReward",
+				"inputs": [],
+				"name": "claimReward",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "coolingTime",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -524,6 +474,19 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "interestPerSecond",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -545,6 +508,13 @@
 					}
 				],
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "matureAmount",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -600,59 +570,35 @@
 			},
 			{
 				"inputs": [],
-				"name": "rewardGenerateTime",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "percentRate",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "months",
-						"type": "uint256"
-					}
-				],
-				"name": "rewardGeneration",
+				"name": "rewardGen",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
 				"inputs": [],
-				"name": "rewardsDistribution",
+				"name": "rewardGeneratedFor",
 				"outputs": [
 					{
-						"internalType": "address",
+						"internalType": "uint256",
 						"name": "",
-						"type": "address"
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
 				"type": "function"
 			},
 			{
-				"inputs": [
+				"inputs": [],
+				"name": "rewardGeneratedTime",
+				"outputs": [
 					{
-						"internalType": "address",
-						"name": "_rewardsDistribution",
-						"type": "address"
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
 					}
 				],
-				"name": "setRewardsDistribution",
-				"outputs": [],
-				"stateMutability": "nonpayable",
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -666,6 +612,11 @@
 						"internalType": "uint256",
 						"name": "months",
 						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_interest",
+						"type": "uint256"
 					}
 				],
 				"name": "stake",
@@ -674,19 +625,45 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"name": "stakingTime",
+				"inputs": [],
+				"name": "stakePerWEEK",
 				"outputs": [
 					{
 						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "stakemoney",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "stakingToken",
+				"outputs": [
+					{
+						"internalType": "contract Rijent",
+						"name": "",
+						"type": "address"
 					}
 				],
 				"stateMutability": "view",
@@ -706,6 +683,19 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "timeAfterStakeFinish",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -713,7 +703,7 @@
 						"type": "address"
 					}
 				],
-				"name": "totalRewardGenerateFor",
+				"name": "totalRewardedAmount",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -738,8 +728,33 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "totalsupply",
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "totalclaimed",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "totalreward",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -841,20 +856,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "unfreezedCapital",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"name": "userStakedAmount",
+				"name": "weekOfClaim",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -919,7 +921,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"Smart Contract/contracts/StakingReward.sol": "StakingReward"
+			"Smart Contract/contracts/test.sol": "STAKING"
 		},
 		"evmVersion": "london",
 		"libraries": {},
@@ -941,14 +943,6 @@
 				"dweb:/ipfs/QmXvF9RCQtMQ4oKi9jzWHPpmiuW1o79xg23k2eVdMGXm2K"
 			]
 		},
-		"Smart Contract/contracts/StakingReward.sol": {
-			"keccak256": "0x1581a0a36f8abdc08fb1580ed136ade98abc1d5a0a9f5f4ed2db3df87a4511c8",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://4f678140ee4c87ecfcae7ecf0ca7d6414009580c72fb00d61aadc3929ed23b50",
-				"dweb:/ipfs/QmWDkWC7Vj8tBzRTybxComi3HNVzdcvxvKt6ew32jpXcK6"
-			]
-		},
 		"Smart Contract/contracts/Token/BEP20.sol": {
 			"keccak256": "0x8a6d462e462200f9816e5a50b0c26e6de04d77e8efb0e822b35548e51e25aaf0",
 			"license": "MIT",
@@ -958,11 +952,11 @@
 			]
 		},
 		"Smart Contract/contracts/Token/Rijent.sol": {
-			"keccak256": "0xc9a4674c954808587429959b07298f0657771180cf824bc7fe216828127eccc2",
+			"keccak256": "0x1d98a0df0b7e3b7e31b5e3d200a5580f4cd0d7c9d4294c31a7adfaecd9858dd1",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://fa4de1dcbac2df5c4af8f3c535d5b6d9348ffa6b47cd0ad12a662accc607c466",
-				"dweb:/ipfs/QmSVJXRMhVEkrfyqBgguyFTxgQpLCESxxN2HCxvTR2KMGZ"
+				"bzz-raw://279e994dbc894a5cf483f9656450e091974cf00d379141a1e053d6d292fb5133",
+				"dweb:/ipfs/QmW1Yj3A5xqDZXzZPCqgHqmU9tWaqFftFRoL5BH3xfBUsu"
 			]
 		},
 		"Smart Contract/contracts/extensions/IBEP20Metadata.sol": {
@@ -973,12 +967,12 @@
 				"dweb:/ipfs/QmPmQ6GFQ2WUBkStfsFiu4VAF1vfBebeCcDuHmXxW6reR2"
 			]
 		},
-		"Smart Contract/contracts/security/ReentrancyGuard.sol": {
-			"keccak256": "0x5531a4a8604939470e38d88dbb16a35c38cf17a3d66393fe9c73b5da561615df",
+		"Smart Contract/contracts/test.sol": {
+			"keccak256": "0x3b806ea94e75d4db379a5cd58657da0f60fd8937fdbed5b039739c0f860c4b25",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://d0fd4ce017408e0e7cda8bb02298443533e2fbb261878df176374bee5c3e4adf",
-				"dweb:/ipfs/QmPhT3sFavHxyWopC7f1Ukzw1TDmmkzr5te24Btuvunpz1"
+				"bzz-raw://184dfe1c9271a0142b87421a958fdff5c7630349345226544403bfd2191cc718",
+				"dweb:/ipfs/QmYYrKYNB7P9XkkDoRpo65eikNkGGeLv89nagxcVgKj4fL"
 			]
 		},
 		"Smart Contract/contracts/utils/Context.sol": {
@@ -994,15 +988,7 @@
 			"license": "MIT",
 			"urls": [
 				"bzz-raw://8e22d1076e0f1962ad06434d9fad9433ad53eacb3e65165b6166006cb635eca5",
-				"dweb:/ipfs/QmcgfbQRijentgAF5yhbMaweS3Y2kQdLSJKdqPwwin4JCEAfX"
-			]
-		},
-		"Smart Contract/contracts/utils/RewardDistributionReceipt.sol": {
-			"keccak256": "0xdaa748efcf9f32cf061695628000694f08a4f98e5549e69667b67d9360ea0e7e",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://ad68c87ea01a1b51f301a7166448ce274dfaa213c2c599c39b8ec6ecef6eaa41",
-				"dweb:/ipfs/QmSX4J9UmddMuJq7Q2Kbm9rW1jwW2pzb1CWXsMtFD8EuM6"
+				"dweb:/ipfs/QmcgfbQrtcgAF5yhbMaweS3Y2kQdLSJKdqPwwin4JCEAfX"
 			]
 		},
 		"Smart Contract/contracts/utils/SafeMath.sol": {

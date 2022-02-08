@@ -923,7 +923,7 @@ contract Rijent is BEP20 {
     using SafeMath for uint256;
     uint256 private totalTokens;
 
-    constructor() BEP20("Rijent Coin", "RTC", 9) {
+    constructor() BEP20("Rijent Coin", "Rijent", 9) {
         totalTokens = 290000000 * 10**uint256(decimals());
         _mint(msg.sender, totalTokens);
     }
