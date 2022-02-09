@@ -111,7 +111,7 @@ contract STAKING is Rijent {
             coolingTime + 20 <= block.timestamp,
             "Can only generate after cooling Time"
         );
-        require(amountStakeClaimable <= stakedAmount,"Error: Timeout");
+       // require(amountStakeClaimable <= stakedAmount,"Error: Timeout");
         stakePerWEEK = _stakedMoney[msg.sender] / 20;
         timeAfterStakeFinish = block.timestamp - coolingTime;
         weekOfClaim = timeAfterStakeFinish / 20;
